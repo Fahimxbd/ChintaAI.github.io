@@ -1,6 +1,6 @@
 🎓 ChintaAI — Intelligent Education Assistant 
 
-EduMind AI is an open-source intelligent education assistant that helps students learn through interactive Q&A, personalized explanations, and adaptive feedback — powered by natural language processing.
+ChintaAI is an open-source intelligent education assistant that helps students learn through interactive Q&A, personalized explanations, and adaptive feedback — powered by natural language processing.
 🌐 Live Demo · 📖 Docs · 🐛 Issues · 🗺️ Roadmap
 �
 
@@ -49,7 +49,7 @@ Student progress dashboard
 Multi-language support
 🌐 Demo
 The beta version is live on GitHub Pages:
-👉 https://aibyfahim.github.io/chintaai
+👉 https:http://www.aibyfahim.com/ChintaAI.github.io/
 Ask questions like:
 "What is photosynthesis?"
 "Explain Newton's second law"
