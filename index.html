@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduMind AI — Education Assistant (Beta)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07090f;
+      --surface: #0f1420;
+      --surface2: #151c2e;
+      --border: #1e2a45;
+      --accent: #3b82f6;
+      --accent2: #06b6d4;
+      --gold: #f59e0b;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow blobs */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.25;
+      animation: blobFloat 8s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #1e40af; top: -150px; left: -100px; }
+    .blob-2 { width: 400px; height: 400px; background: #0e7490; bottom: -100px; right: -100px; animation-delay: 3s; }
+    .blob-3 { width: 300px; height: 300px; background: #7c3aed; top: 40%; left: 50%; animation-delay: 5s; opacity: 0.15; }
+
+    @keyframes blobFloat {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, -30px) scale(1.05); }
+    }
+
+    /* Layout */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      padding: 40px 0 0;
+      text-align: center;
+      animation: fadeDown 0.7s ease both;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      letter-spacing: 0.08em;
+    }
+    .badge::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .stat span { color: var(--accent2); font-weight: 500; }
+
+    /* Main Q&A Card */
+    .qa-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s 0.2s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qa-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+    }
+
+    .input-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .input-wrapper {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    input[type="text"]::placeholder { color: var(--muted); }
+
+    button.ask-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      color: white;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    button.ask-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    button.ask-btn:active { transform: translateY(0); }
+    button.ask-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Answer Area */
+    .answer-area {
+      margin-top: 24px;
+      display: none;
+      animation: fadeUp 0.4s ease both;
+    }
+    .answer-area.show { display: block; }
+
+    .answer-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .tag-subject { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+    .tag-diff   { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+    .tag-conf   { background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+    .tag-no     { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+
+    .answer-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      line-height: 1.75;
+      font-size: 0.95rem;
+      color: var(--text);
+      position: relative;
+    }
+
+    .answer-box::before {
+      content: '💬';
+      position: absolute;
+      top: -12px;
+      left: 18px;
+      background: var(--bg);
+      padding: 0 6px;
+      font-size: 14px;
+    }
+
+    /* Suggestions */
+    .suggestions {
+      margin-top: 28px;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .suggestions h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 14px;
+      font-size: 0.82rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip:hover {
+      background: rgba(59,130,246,0.12);
+      border-color: var(--accent);
+      color: #93c5fd;
+    }
+
+    /* Subjects grid */
+    .subjects-section {
+      margin-top: 40px;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .subject-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .subject-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59,130,246,0.1);
+    }
+    .subject-card .icon { font-size: 24px; margin-bottom: 8px; }
+    .subject-card .name {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    /* Typing indicator */
+    .typing {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 16px 0 4px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .typing.show { display: flex; }
+    .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: dotBounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-8px); }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: 'DM Mono', monospace;
+      animation: fadeUp 0.7s 0.6s ease both;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .input-wrapper { flex-direction: column; }
+      .qa-card { padding: 20px; }
+      .stats-row { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="badge">Beta v0.1.0 · GitHub Pages Demo</div>
+    <h1>EduMind AI</h1>
+    <p class="subtitle">An intelligent education assistant that answers your academic questions — powered by a curated knowledge engine.</p>
+
+    <div class="stats-row">
+      <div class="stat">Knowledge entries: <span id="total-count">16</span></div>
+      <div class="stat">Subjects: <span>5</span></div>
+      <div class="stat">Version: <span>0.1.0-beta</span></div>
+    </div>
+  </header>
+
+  <!-- Q&A Card -->
+  <div class="qa-card">
+    <p class="input-label">// Ask a question</p>
+    <div class="input-wrapper">
+      <input
+        type="text"
+        id="question-input"
+        placeholder="e.g. What is photosynthesis?"
+        autocomplete="off"
+      />
+      <button class="ask-btn" id="ask-btn" onclick="askQuestion()">Ask AI →</button>
+    </div>
+
+    <div class="typing" id="typing">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <span style="margin-left:6px">EduMind is thinking...</span>
+    </div>
+
+    <div class="answer-area" id="answer-area">
+      <div class="answer-meta" id="answer-meta"></div>
+      <div class="answer-box" id="answer-box"></div>
+    </div>
+  </div>
+
+  <!-- Suggestions -->
+  <div class="suggestions">
+    <h3>Try asking</h3>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <!-- Subjects -->
+  <div class="subjects-section">
+    <p class="section-label">Available Subjects</p>
+    <div class="subjects-grid">
+      <div class="subject-card" onclick="setQuestion('What is photosynthesis?')">
+        <div class="icon">🔬</div>
+        <div class="name">Science</div>
+      </div>
+      <div class="subject-card" onclick="setQuestion('What is the Pythagorean theorem?')">
+        <div class="icon">📐</div>
+        <div class="name">Mathematics</div>
+      </div>
+      <div class="subject-card" onclick="setQuestion('What caused World War 2?')">
+        <div class="icon">🌍</div>
+        <div class="name">History</div>
+      </div>
+      <div class="subject-card" onclick="setQuestion('What is machine learning?')">
+        <div class="icon">💻</div>
+        <div class="name">CS / AI</div>
+      </div>
+      <div class="subject-card" onclick="setQuestion('What is a metaphor?')">
+        <div class="icon">📖</div>
+        <div class="name">English</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>EduMind AI · Beta v0.1.0 · University Project</p>
+    <p style="margin-top:6px">
+      <a href="https://github.com/yourusername/edumind-ai">GitHub</a> ·
+      <a href="https://github.com/yourusername/edumind-ai/blob/main/README.md">Docs</a> ·
+      <a href="https://github.com/yourusername/edumind-ai/issues">Report Issue</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // ===========================
+  // EduMind AI — Frontend Q&A
+  // Knowledge base (mirrors data/knowledge_base.json)
+  // ===========================
+
+  const knowledgeBase = [
+    {
+      keywords: ["photosynthesis","plants","food","sunlight","chlorophyll"],
+      answer: "Photosynthesis is the process by which green plants convert sunlight, water, and CO₂ into glucose and oxygen. It occurs in chloroplasts using a green pigment called chlorophyll. Equation: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+      subject: "Biology", difficulty: "Beginner"
+    },
+    {
+      keywords: ["newton","second law","force","mass","acceleration","f=ma","f = ma"],
+      answer: "Newton's Second Law states that Force = Mass × Acceleration (F = ma). The acceleration of an object is directly proportional to net force and inversely proportional to its mass. Example: 10 kg object with 50 N force → acceleration = 5 m/s².",
+      subject: "Physics", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["climate change","global warming","greenhouse","carbon dioxide","co2","environment"],
+      answer: "Climate change is primarily caused by increased greenhouse gases (CO₂, methane) from burning fossil fuels, deforestation, and industrial processes. These gases trap solar heat in Earth's atmosphere — the greenhouse effect — causing global temperatures to rise.",
+      subject: "Environmental Science", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["speed of light","light speed","c","electromagnetic","299"],
+      answer: "The speed of light in a vacuum is approximately 299,792,458 m/s (≈ 3 × 10⁸ m/s), denoted as 'c'. It is the universal speed limit, as established by Einstein's special relativity. Light takes ~8 minutes 20 seconds to travel from the Sun to Earth.",
+      subject: "Physics", difficulty: "Beginner"
+    },
+    {
+      keywords: ["dna","deoxyribonucleic","genes","genetics","heredity","chromosome","double helix"],
+      answer: "DNA (Deoxyribonucleic Acid) is the molecule carrying genetic instructions for all living organisms. It's a double helix made of nucleotides (A, T, G, C). Located in the cell nucleus, DNA contains genes that code for proteins and determine inherited traits.",
+      subject: "Biology", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["pythagorean","theorem","triangle","hypotenuse","right angle","a squared","a2","b2"],
+      answer: "The Pythagorean Theorem: In a right-angled triangle, a² + b² = c², where c is the hypotenuse. Example: sides 3 and 4 → hypotenuse = √(9+16) = √25 = 5. This is the famous '3-4-5 right triangle'.",
+      subject: "Mathematics", difficulty: "Beginner"
+    },
+    {
+      keywords: ["calculus","derivative","integral","differentiation","integration","limits"],
+      answer: "Calculus studies continuous change and has two branches: (1) Differential Calculus — derivatives, measuring rates of change. (2) Integral Calculus — integrals, calculating areas and accumulation. Developed independently by Newton and Leibniz in the 17th century.",
+      subject: "Mathematics", difficulty: "Advanced"
+    },
+    {
+      keywords: ["prime number","prime","divisible","factors"],
+      answer: "A prime number is a natural number > 1 with no divisors other than 1 and itself. Examples: 2, 3, 5, 7, 11, 13... The number 2 is the only even prime. Primes are fundamental to number theory and modern cryptography (RSA encryption).",
+      subject: "Mathematics", difficulty: "Beginner"
+    },
+    {
+      keywords: ["world war 2","ww2","world war ii","causes","hitler","nazi","1939"],
+      answer: "World War II (1939–1945) was caused by: (1) Rise of Hitler's Nazi Germany, (2) Failure of the Treaty of Versailles, (3) Great Depression instability, (4) Appeasement policies by Britain and France, (5) Germany's invasion of Poland on September 1, 1939. It involved 30+ countries and ~70–85 million casualties.",
+      subject: "World History", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["industrial revolution","industry","factory","steam engine","manufacturing","18th century"],
+      answer: "The Industrial Revolution (1760–1840) began in Britain and transformed agrarian societies into industrial ones. Key inventions: steam engine (Watt), mechanized textile looms, railways, iron production. It led to urbanization, factory work, and set the foundation for the modern economy.",
+      subject: "World History", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["algorithm","steps","problem solving","instructions","procedure","sorting"],
+      answer: "An algorithm is a finite set of clear instructions to solve a problem. Key properties: Finiteness (must end), Definiteness (each step is clear), Input/Output, and Effectiveness. Examples: Bubble Sort, Binary Search, Dijkstra's path algorithm.",
+      subject: "Computer Science", difficulty: "Beginner"
+    },
+    {
+      keywords: ["machine learning","ml","artificial intelligence","training","data","model","supervised"],
+      answer: "Machine Learning (ML) is a subset of AI that allows systems to learn from data without explicit programming. Types: (1) Supervised Learning (labeled data — e.g. spam detection), (2) Unsupervised Learning (clustering), (3) Reinforcement Learning (reward-based). Key algorithms: neural networks, decision trees, SVM.",
+      subject: "Computer Science", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["object oriented","oop","class","object","inheritance","encapsulation","polymorphism"],
+      answer: "OOP (Object-Oriented Programming) organizes code around objects. The 4 pillars: (1) Encapsulation — data + methods bundled, (2) Inheritance — child classes inherit from parent, (3) Polymorphism — same interface, different behavior, (4) Abstraction — hide complexity. Languages: Python, Java, C++.",
+      subject: "Computer Science", difficulty: "Intermediate"
+    },
+    {
+      keywords: ["metaphor","figure of speech","comparison","literary device","simile"],
+      answer: "A metaphor is a figure of speech comparing two unlike things by stating one IS another (no 'like' or 'as'). Examples: 'Time is money', 'The world is a stage' (Shakespeare). Unlike similes which use 'like'/'as', metaphors make a direct, bold comparison.",
+      subject: "English Literature", difficulty: "Beginner"
+    },
+    {
+      keywords: ["mitosis","cell division","chromosome","nucleus","biology","cell cycle"],
+      answer: "Mitosis is the type of cell division where one parent cell divides to produce two identical daughter cells. Stages: Prophase → Metaphase → Anaphase → Telophase → Cytokinesis. 
