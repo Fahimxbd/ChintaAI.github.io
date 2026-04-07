@@ -49,7 +49,7 @@ Student progress dashboard
 Multi-language support
 🌐 Demo
 The beta version is live on GitHub Pages:
-👉 https://yourusername.github.io/edumind-ai
+👉 https://aibyfahim.github.io/chintaai
 Ask questions like:
 "What is photosynthesis?"
 "Explain Newton's second law"
