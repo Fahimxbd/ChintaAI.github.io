@@ -1,0 +1,133 @@
+{
+  "version": "0.1.0-beta",
+  "last_updated": "2025-01-01",
+  "subjects": {
+    "science": [
+      {
+        "id": "sci_001",
+        "question": "What is photosynthesis?",
+        "keywords": ["photosynthesis", "plants", "food", "sunlight", "chlorophyll"],
+        "answer": "Photosynthesis is the process by which green plants, algae, and some bacteria convert sunlight, water, and carbon dioxide into glucose (food) and oxygen. It occurs mainly in the chloroplasts of plant cells, which contain a green pigment called chlorophyll. The chemical equation is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂",
+        "difficulty": "beginner",
+        "subject": "Biology"
+      },
+      {
+        "id": "sci_002",
+        "question": "What is Newton's second law?",
+        "keywords": ["newton", "second law", "force", "mass", "acceleration", "f=ma"],
+        "answer": "Newton's Second Law of Motion states that the acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass. Formula: F = ma, where F is force (in Newtons), m is mass (in kg), and a is acceleration (in m/s²). Example: If a 10 kg object has a force of 50 N applied, its acceleration = 50/10 = 5 m/s².",
+        "difficulty": "intermediate",
+        "subject": "Physics"
+      },
+      {
+        "id": "sci_003",
+        "question": "What causes climate change?",
+        "keywords": ["climate change", "global warming", "greenhouse", "carbon dioxide", "CO2", "environment"],
+        "answer": "Climate change is primarily caused by the increase of greenhouse gases in Earth's atmosphere, mainly from human activities. Key causes include: (1) Burning fossil fuels (coal, oil, gas) releasing CO₂, (2) Deforestation reducing CO₂ absorption, (3) Industrial processes emitting methane and nitrous oxide, (4) Agriculture and livestock producing methane. These gases trap heat from the sun, causing the planet to warm — known as the greenhouse effect.",
+        "difficulty": "intermediate",
+        "subject": "Environmental Science"
+      },
+      {
+        "id": "sci_004",
+        "question": "What is the speed of light?",
+        "keywords": ["speed of light", "light speed", "c", "meters per second", "electromagnetic"],
+        "answer": "The speed of light in a vacuum is approximately 299,792,458 meters per second (about 3 × 10⁸ m/s), commonly denoted as 'c'. This is considered the ultimate speed limit in the universe, as described by Einstein's theory of special relativity. Light takes about 8 minutes and 20 seconds to travel from the Sun to Earth.",
+        "difficulty": "beginner",
+        "subject": "Physics"
+      },
+      {
+        "id": "sci_005",
+        "question": "What is DNA?",
+        "keywords": ["dna", "deoxyribonucleic acid", "genes", "genetics", "heredity", "chromosome"],
+        "answer": "DNA (Deoxyribonucleic Acid) is the molecule that carries the genetic instructions for the development, functioning, growth, and reproduction of all living organisms. It is a double helix structure made of nucleotides (adenine, thymine, guanine, cytosine). DNA is located in the cell nucleus and contains the 'blueprint' of life — our genes are segments of DNA that code for specific proteins and traits.",
+        "difficulty": "intermediate",
+        "subject": "Biology"
+      }
+    ],
+    "mathematics": [
+      {
+        "id": "math_001",
+        "question": "What is the Pythagorean theorem?",
+        "keywords": ["pythagorean", "theorem", "triangle", "hypotenuse", "right angle", "a squared", "b squared"],
+        "answer": "The Pythagorean Theorem states that in a right-angled triangle, the square of the hypotenuse (the side opposite the right angle) is equal to the sum of the squares of the other two sides. Formula: a² + b² = c², where c is the hypotenuse and a, b are the other two sides. Example: If a = 3, b = 4, then c = √(9 + 16) = √25 = 5.",
+        "difficulty": "beginner",
+        "subject": "Geometry"
+      },
+      {
+        "id": "math_002",
+        "question": "What is calculus?",
+        "keywords": ["calculus", "derivative", "integral", "differentiation", "integration", "limits"],
+        "answer": "Calculus is a branch of mathematics that studies continuous change. It has two main branches: (1) Differential Calculus — deals with derivatives, which measure how a function changes at any point (rate of change, slopes). (2) Integral Calculus — deals with integrals, which calculate areas under curves and accumulation of quantities. Calculus was independently developed by Newton and Leibniz in the 17th century.",
+        "difficulty": "advanced",
+        "subject": "Mathematics"
+      },
+      {
+        "id": "math_003",
+        "question": "What is a prime number?",
+        "keywords": ["prime number", "prime", "divisible", "factors"],
+        "answer": "A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. Examples: 2, 3, 5, 7, 11, 13, 17, 19... The number 2 is the only even prime number. A number that is not prime is called a composite number. Prime numbers are fundamental to number theory and cryptography.",
+        "difficulty": "beginner",
+        "subject": "Mathematics"
+      }
+    ],
+    "history": [
+      {
+        "id": "hist_001",
+        "question": "What caused World War 2?",
+        "keywords": ["world war 2", "ww2", "world war ii", "causes", "hitler", "nazi", "1939"],
+        "answer": "World War II (1939–1945) was caused by multiple interrelated factors: (1) Rise of fascism and Adolf Hitler's Nazi Party in Germany, (2) Failure of the Treaty of Versailles after WWI, which humiliated Germany, (3) Economic instability of the Great Depression, (4) Appeasement policies by Britain and France, (5) German invasion of Poland on September 1, 1939, prompting Britain and France to declare war. The war involved over 30 countries and resulted in approximately 70–85 million casualties.",
+        "difficulty": "intermediate",
+        "subject": "World History"
+      },
+      {
+        "id": "hist_002",
+        "question": "What was the Industrial Revolution?",
+        "keywords": ["industrial revolution", "industry", "factory", "steam engine", "18th century", "manufacturing"],
+        "answer": "The Industrial Revolution was a period of major industrialization and innovation that began in Britain around 1760–1840 and spread globally. Key developments included: steam engine (James Watt), mechanized textile production, iron and steel manufacturing, and railways. It transformed societies from agrarian economies to industrial ones, led to urbanization, and dramatically changed working conditions and daily life.",
+        "difficulty": "intermediate",
+        "subject": "World History"
+      }
+    ],
+    "computer_science": [
+      {
+        "id": "cs_001",
+        "question": "What is an algorithm?",
+        "keywords": ["algorithm", "steps", "problem solving", "instructions", "procedure"],
+        "answer": "An algorithm is a finite set of well-defined instructions or rules designed to solve a specific problem or perform a computation. Key properties of a good algorithm: (1) Finiteness — must terminate, (2) Definiteness — each step is clear, (3) Input — has defined inputs, (4) Output — produces results, (5) Effectiveness — steps are executable. Examples: sorting algorithms (bubble sort, merge sort), search algorithms (binary search).",
+        "difficulty": "beginner",
+        "subject": "Computer Science"
+      },
+      {
+        "id": "cs_002",
+        "question": "What is machine learning?",
+        "keywords": ["machine learning", "ml", "artificial intelligence", "training", "data", "model"],
+        "answer": "Machine Learning (ML) is a subset of Artificial Intelligence that enables systems to learn and improve from experience without being explicitly programmed. Types: (1) Supervised Learning — trained on labeled data (e.g., spam detection), (2) Unsupervised Learning — finds patterns in unlabeled data (e.g., clustering), (3) Reinforcement Learning — learns through reward and punishment. Key algorithms include neural networks, decision trees, and support vector machines.",
+        "difficulty": "intermediate",
+        "subject": "Computer Science"
+      },
+      {
+        "id": "cs_003",
+        "question": "What is object-oriented programming?",
+        "keywords": ["object oriented", "oop", "class", "object", "inheritance", "encapsulation", "polymorphism"],
+        "answer": "Object-Oriented Programming (OOP) is a programming paradigm based on the concept of 'objects' — entities that contain data (attributes) and code (methods). The four main principles are: (1) Encapsulation — bundling data and methods together, (2) Inheritance — creating new classes from existing ones, (3) Polymorphism — same interface for different data types, (4) Abstraction — hiding complex implementation details. Languages: Python, Java, C++, C#.",
+        "difficulty": "intermediate",
+        "subject": "Computer Science"
+      }
+    ],
+    "english": [
+      {
+        "id": "eng_001",
+        "question": "What is a metaphor?",
+        "keywords": ["metaphor", "figure of speech", "comparison", "literary device"],
+        "answer": "A metaphor is a figure of speech that makes a direct comparison between two unrelated things, stating that one thing IS another to highlight a shared characteristic. Unlike a simile, it does not use 'like' or 'as'. Example: 'Time is money' (comparing time to money), 'The world is a stage' (Shakespeare). Metaphors are powerful literary tools used in poetry, prose, and everyday language.",
+        "difficulty": "beginner",
+        "subject": "English Literature"
+      }
+    ]
+  },
+  "fallback_responses": [
+    "That's a great question! Unfortunately, I don't have a specific answer in my current knowledge base. Try rephrasing your question, or check back in future versions when my knowledge base expands.",
+    "I'm still learning! This topic isn't in my beta knowledge base yet. Please try asking about Science, Mathematics, History, Computer Science, or English.",
+    "Hmm, I couldn't find a match for that question. Try keywords like 'photosynthesis', 'Newton's law', 'World War 2', 'algorithm', or 'Pythagorean theorem'."
+  ]
+}
