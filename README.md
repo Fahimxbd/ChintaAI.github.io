@@ -1,4 +1,4 @@
-🎓 EduMind AI — Intelligent Education Assistant 
+🎓 ChintaAI — Intelligent Education Assistant 
 
 EduMind AI is an open-source intelligent education assistant that helps students learn through interactive Q&A, personalized explanations, and adaptive feedback — powered by natural language processing.
 🌐 Live Demo · 📖 Docs · 🐛 Issues · 🗺️ Roadmap
@@ -16,10 +16,10 @@ Roadmap
 Contributing
 License
 🧠 Overview
-EduMind AI is a long-term research and development project aimed at building a fully autonomous AI tutor for students across all education levels. The system leverages modern NLP techniques to answer academic questions, provide step-by-step explanations, and adapt to each learner's pace and style.
+ChintaAI is a long-term research and development project aimed at building a fully autonomous AI tutor for students across all education levels. The system leverages modern NLP techniques to answer academic questions, provide step-by-step explanations, and adapt to each learner's pace and style.
 Current Phase: Beta v0.1.0 — Basic Q&A interface via GitHub Pages
 Target: Full AI tutoring system with personalized learning paths
-Why EduMind?
+Why ChintaAI?
 Problem
 EduMind's Solution
 Students can't get instant academic help
@@ -77,8 +77,8 @@ Python 3.10+
 pip
 Git
 Clone the Repository
-git clone https://github.com/yourusername/edumind-ai.git
-cd edumind-ai
+git clone 
+http://www.aibyfahim.com/ChintaAI.github.io/
 Install Python Dependencies
 pip install -r requirements.txt
 Run Locally
@@ -86,7 +86,7 @@ python src/app.py
 Then open http://localhost:5000 in your browser.
 🖥️ Usage
 Web Interface (Beta)
-Visit the live demo and type any educational question into the input box. EduMind will respond with a relevant answer from its knowledge base.
+Visit the live demo and type any educational question into the input box. EduMind AI will respond with a relevant answer from its knowledge base.
 Python API (Local)
 from src.qa_engine import EduMindQA
 
@@ -96,7 +96,7 @@ print(answer)
 CLI Mode
 python src/cli.py --question "What is the speed of light?"
 📁 Project Structure
-edumind-ai/
+EduMind-AI/
 ├── index.html              # GitHub Pages entry point
 ├── assets/
 │   ├── css/
