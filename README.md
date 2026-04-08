@@ -57,7 +57,7 @@ Ask questions like:
 "What is the Pythagorean theorem?"
 🏗️ Architecture
 ┌─────────────────────────────────────────────┐
-│               EduMind AI System              │
+│               Chinta AI System              │
 ├─────────────┬───────────────────────────────┤
 │  Frontend   │  HTML + CSS + JavaScript       │
 │  (Beta)     │  GitHub Pages (Static)         │
@@ -90,7 +90,7 @@ Visit the live demo and type any educational question into the input box. EduMin
 Python API (Local)
 from src.qa_engine import EduMindQA
 
-ai = EduMindQA()
+ai = ChintaQA()
 answer = ai.ask("What is photosynthesis?")
 print(answer)
 CLI Mode
